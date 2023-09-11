@@ -38,6 +38,7 @@ class UserController extends Controller
         if ($request->ajax()) {
             $alldata= User::with(['department','designation','role'])
                             ->where('id', '!=', 1)
+                            ->where('status', 1)
                             ->orderBy('designation_id','asc')
                             ->get();
             return DataTables::of($alldata)
@@ -210,10 +211,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $id)
+    public function destroy($id)
     {
-        Gate::authorize('app.users.delete');
-        $user->delete();
+        Gate::authorize('app.users.destroy');
+        User::where('id', $id)->update(['status' => 0]);
         Session::flash('flash_message','User Successfully Updated !');
         return redirect()->back()->with('status_color','warning');
     }

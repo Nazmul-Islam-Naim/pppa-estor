@@ -393,7 +393,8 @@
                                 <li class="default-sidebar-dropdown {{(
                                     $url==config('app.requisition').'/requisition/create' || $url==(request()->is(config('app.requisition').'/requisition/*/edit')) ||
                                     $url==config('app.requisition').'/requisition' ||
-                                    $url==config('app.requisition').'/report') ? 'active':''}}">
+                                    $url==config('app.requisition').'/report' ||
+                                    $url==config('app.requisition').'/requisition-accept-list') ? 'active':''}}">
                                     <a href="javascript::void(0)">
                                         <i class="icon-send1"></i>
                                         <span class="menu-text">Requisition Management</span>
@@ -412,7 +413,12 @@
                                             @endcan
                                             @can('app.requisition.report')
                                             <li>
-                                                <a href="{{$baseUrl.'/'.config('app.requisition').'/report'}}" class="{{($url==config('app.requisition').'/report') ? 'current-page':''}}">Report</a>
+                                                <a href="{{$baseUrl.'/'.config('app.requisition').'/report'}}" class="{{($url==config('app.requisition').'/report') ? 'current-page':''}}">Invoice Report</a>
+                                            </li>
+                                            @endcan
+                                            @can('app.requisition.report')
+                                            <li>
+                                                <a href="{{$baseUrl.'/'.config('app.requisition').'/requisition-accept-list'}}" class="{{($url==config('app.requisition').'/requisition-accept-list') ? 'current-page':''}}">Accepted List</a>
                                             </li>
                                             @endcan
                                         </ul>

@@ -131,6 +131,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::put('changeStatus/{id}',[RequisitionController::class,'statusupdate'])->name('requisition.statusUpdate');
         Route::get('report',[RequisitionController::class,'report'])->name('requisition.report');
         Route::get('delete-an-item/{id}',[RequisitionController::class,'deleteAnItem'])->name('delete-an-item');
+        Route::get('requisition-accept-list',[RequisitionController::class,'acceptedRequisition'])->name('requisition-accept-list');
+        Route::get('complete-invoice/{id}',[RequisitionController::class,'completeInvoice'])->name('complete-invoice');
     });
 
 

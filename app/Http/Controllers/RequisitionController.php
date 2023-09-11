@@ -61,6 +61,25 @@ class RequisitionController extends Controller
         }
         return view('requisition.requisition-list');
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function acceptedRequisition(Request $request)
+    {
+        Gate::authorize('app.requisition.report');
+        if ($request->ajax()) {
+            
+            $alldata= Requisition::with(['user','user.department','user.designation','user.role'])
+                            ->where('status', 3)
+                            ->orWhere('status', 4)
+                            ->get();             
+            return DataTables::of($alldata)
+            ->addIndexColumn()->make(True);
+        }
+        return view('requisition.requisition-accept-list');
+    }
     
 
 
@@ -152,6 +171,19 @@ class RequisitionController extends Controller
         $data['alldata'] = RequisitonProduct::where('requisition_id',$id)->get();
         $data['user']=Auth::user();
         return view('requisition.requisition-invoice',$data);
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function completeInvoice(Request $request, $id)
+    {
+        $data['single_data'] = Requisition::findOrFail($id);
+        $data['alldata'] = RequisitonProduct::where('requisition_id',$id)->get();
+        $data['user']=Auth::user();
+        return view('requisition.complete-invoice',$data);
     }
 
 

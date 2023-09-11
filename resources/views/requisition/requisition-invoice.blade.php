@@ -30,6 +30,8 @@
 
                             @if(! $single_data->isOwner() && ! $user->isStorekeeper() && $user->hasPermission('app.requisition.approve') && App\Enum\Status::tryFrom($single_data->status)->toString() == "Published")
                             <a href="{{route('requisition.edit',$single_data->id)}}" class="btn btn-sm btn-warning pull-right"><i class="icon-plus-circle"></i> <b>Edit</b></a>
+                            @elseif(! $single_data->isOwner() && $user->isStorekeeper() && $user->hasPermission('app.requisition.approve') && App\Enum\Status::tryFrom($single_data->status)->toString() == "Approver")
+                            <a href="{{route('requisition.edit',$single_data->id)}}" class="btn btn-sm btn-warning pull-right"><i class="icon-plus-circle"></i> <b>Edit</b></a>
                             @endif
                         </div>
                     </div>
